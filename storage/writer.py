@@ -4,12 +4,12 @@ def write_image(conn, meta, embedding):
     conn.execute(
         """
         INSERT OR IGNORE INTO images
-        (path, sha256, width, height, format, tags, caption, embedding)
+        (path, md5, width, height, format, tags, caption, embedding)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             meta["path"],
-            meta["sha256"],
+            meta["hash"],
             meta["w"],
             meta["h"],
             meta["format"],

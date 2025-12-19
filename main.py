@@ -12,6 +12,7 @@ from utils.batch_load import batch, load_images_batches
 from tqdm import tqdm
 from config import *
 import warnings, os
+import imagehash
 
 warnings.filterwarnings("ignore", category=FutureWarning, message=".*sdp_kernel.*")
 
@@ -21,13 +22,14 @@ emb = ImageEmbedder(EMBEDDING_MODEL)
 jz = JoyZ3DETagger(JOYTAG_MODEL, Z3DE_MODEL)
 jc = JoyCaptioner(JOYCAPTION_MODEL)
 
-
 def main():
+    print(f'Scanning images in: {IMG_PATH}')
     conn = get_db()
     all_files = []
     # supported_exts = IMAGE_EXT | VIDEO_EXT | GIF_EXT
     supported_exts = IMAGE_EXT
-    for root, _, files in os.walk(IMG_PATH):
+    print(f'Supported extensions: {supported_exts}')
+    for root, t, files in os.walk(IMG_PATH):
         for f in files:
             ext = os.path.splitext(f)[1].lower()
             if ext in supported_exts:
@@ -62,11 +64,12 @@ def main():
         img_w = [img.width for img in imgs]
         img_h = [img.height for img in imgs]
         img_formats = [os.path.splitext(p)[1] for p in valid_paths]  # 修正：使用 valid_paths
+        hash = [str(imagehash.average_hash(img)) for img in imgs]
 
-        for path, w, h, format, tags, embedding, caption in zip(paths, img_w, img_h, img_formats, tags_results, emb_results, jc_results):
+        for path, hs, w, h, format, tags, embedding, caption in zip(paths, hash, img_w, img_h, img_formats, tags_results, emb_results, jc_results):
             write_image(conn, {
             'path': path,
-            'sha256': 'TODO',
+            'hash': hs,
             'w': w,
             'h': h,
             'format': format,

@@ -7,7 +7,7 @@ def get_db():
     CREATE TABLE IF NOT EXISTS images (
         id INTEGER PRIMARY KEY,
         path TEXT UNIQUE,
-        sha256 TEXT,
+        hash TEXT,
         width INTEGER,
         height INTEGER,
         format TEXT,

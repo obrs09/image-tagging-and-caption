@@ -5,8 +5,9 @@ GIF_EXT = {".gif"}
 
 DB_PATH = "images.db"
 BATCH_SIZE = 12
-IMG_PATH = "E:\\e\\img"
-IMG_PATH = "E:\\aaaa\\二次元图片里\\3D\\新建文件夹"
+# IMG_PATH = "E:\\e\\img"
+# IMG_PATH = "E:\\ll"
+IMG_PATH = "E:\\aaaa\\二次元图片里\\3D\\薯条真好次\\メイドの迷宮コハル編 Vol.1"
 
 WD14_MODEL = "SmilingWolf/wd-vit-large-tagger-v3"
 FLORENCE_MODEL = "microsoft/florence-2-large"
